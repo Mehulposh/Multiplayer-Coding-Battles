@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Battle from '../models/battleModel.js';
 import Problem from '../models/problemModel.js';
 import User from '../models/userModel.js';
-import { addToExecutionQueue } from '../queues/executionQueue';
+import { addToExecutionQueue } from '../queue/executionQueue.js';
 import logger from '../utils/logger.js';
 
 const createBattle = async (req, res) => {
