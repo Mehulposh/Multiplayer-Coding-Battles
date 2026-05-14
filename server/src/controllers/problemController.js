@@ -1,6 +1,108 @@
 import Problem from '../models/problemModel.js';
 import logger from '../utils/logger.js';
 
+
+// ─── CREATE ───────────────────────────────────────────────
+const createProblem = async (req, res) => {
+  try {
+    const {
+      title, difficulty, description,
+      examples, constraints, starterCode,
+      testCases, hiddenTestCases, tags,
+      timeLimitMs, memoryLimitMb,
+    } = req.body;
+
+    if (!title || !difficulty || !description) {
+      return res.status(400).json({ message: 'title, difficulty and description are required' });
+    }
+    if (!['easy', 'medium', 'hard'].includes(difficulty)) {
+      return res.status(400).json({ message: 'difficulty must be easy, medium, or hard' });
+    }
+    if (!testCases || !Array.isArray(testCases) || testCases.length === 0) {
+      return res.status(400).json({ message: 'At least one testCase is required' });
+    }
+
+    const exists = await Problem.findOne({ title });
+    if (exists) {
+      return res.status(409).json({ message: `A problem named "${title}" already exists` });
+    }
+
+    const problem = await Problem.create({
+      title, difficulty, description,
+      examples:        examples        || [],
+      constraints:     constraints     || [],
+      starterCode:     starterCode     || {},
+      testCases:       testCases       || [],
+      hiddenTestCases: hiddenTestCases || [],
+      tags:            tags            || [],
+      timeLimitMs:     timeLimitMs     || 2000,
+      memoryLimitMb:   memoryLimitMb   || 128,
+      isActive: true,
+    });
+
+    res.status(201).json({ message: 'Problem created', problem });
+  } catch (err) {
+    logger.error('Create problem error:', err);
+    res.status(500).json({ message: 'Failed to create problem' });
+  }
+};
+
+// ─── UPDATE ───────────────────────────────────────────────
+const updateProblem = async (req, res) => {
+  try {
+    const problem = await Problem.findById(req.params.id);
+    if (!problem) return res.status(404).json({ message: 'Problem not found' });
+
+    const allowed = [
+      'title', 'difficulty', 'description', 'examples',
+      'constraints', 'starterCode', 'testCases',
+      'hiddenTestCases', 'tags', 'timeLimitMs', 'memoryLimitMb', 'isActive',
+    ];
+
+    allowed.forEach((field) => {
+      if (req.body[field] !== undefined) problem[field] = req.body[field];
+    });
+
+    await problem.save();
+    res.json({ message: 'Problem updated', problem });
+  } catch (err) {
+    logger.error('Update problem error:', err);
+    res.status(500).json({ message: 'Failed to update problem' });
+  }
+};
+
+// ─── DELETE ───────────────────────────────────────────────
+const deleteProblem = async (req, res) => {
+  try {
+    const problem = await Problem.findByIdAndDelete(req.params.id);
+    if (!problem) return res.status(404).json({ message: 'Problem not found' });
+    res.json({ message: `Problem "${problem.title}" deleted` });
+  } catch (err) {
+    logger.error('Delete problem error:', err);
+    res.status(500).json({ message: 'Failed to delete problem' });
+  }
+};
+
+// ─── TOGGLE ACTIVE ────────────────────────────────────────
+const toggleProblem = async (req, res) => {
+  try {
+    const problem = await Problem.findById(req.params.id);
+    if (!problem) return res.status(404).json({ message: 'Problem not found' });
+
+    problem.isActive = !problem.isActive;
+    await problem.save();
+
+    res.json({
+      message: `Problem "${problem.title}" is now ${problem.isActive ? 'active' : 'inactive'}`,
+      isActive: problem.isActive,
+    });
+  } catch (err) {
+    logger.error('Toggle problem error:', err);
+    res.status(500).json({ message: 'Failed to toggle problem' });
+  }
+};
+
+
 const getProblems = async (req, res) => {
   try {
     const { difficulty, tag, page = 1, limit = 20 } = req.query;
@@ -349,4 +451,12 @@ const seedProblems = async (req, res) => {
   }
 };
 
-export { getProblems, getProblem, seedProblems };
+export {
+  getProblems,
+  getProblem,
+  seedProblems,
+  createProblem,
+  updateProblem,
+  deleteProblem,
+  toggleProblem,
+};
