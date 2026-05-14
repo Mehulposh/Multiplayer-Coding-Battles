@@ -1,5 +1,5 @@
-const Battle = require('../models/Battle');
-const logger = require('../utils/logger');
+import Battle from '../models/battleModel.js';
+import logger from '../utils/logger.js';
 
 export default function battleSocketHandlers(io, socket) {
   // Join a battle room
