@@ -21,4 +21,4 @@ export function getRedis() {
   return redisClient;
 }
 
-export {connectRedis};
+export default connectRedis;
