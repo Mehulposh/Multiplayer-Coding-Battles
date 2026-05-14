@@ -1,6 +1,6 @@
 import express from 'express';
 import { getProblems, getProblem, seedProblems } from '../controllers/problemController.js';
-import { protect } from '../middleware/authMiddleware.jss';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
