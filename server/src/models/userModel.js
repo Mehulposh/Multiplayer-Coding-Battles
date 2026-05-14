@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         minLength: [5, 'Username should have atleast 5 characters'],
-        maxLenght: [20, 'Username cannot exceed 20 characters'],
+        maxLength: [20, 'Username cannot exceed 20 characters'],
         match: [/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'],
     },
     email: {
@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Email is required"],
         unique: true,
         lowercase: true,
+        trim: true,
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],
     },
     password: {
@@ -69,22 +70,21 @@ const UserSchema = new mongoose.Schema({
 
 
 //hash password before saving
-UserSchema.pre('save' , async function (next) {
-    if(!this.isModified('password')) return next()
-
+UserSchema.pre('save' , async function () {
+    if(!this.isModified('password')) return 
     this.password = await bcrypt.hash(this.password,12)
-    next()
+    
 })
 
 
 //compare password
-UserSchema.methods.ComparePassword = async function (candiatePassword) {
-    return bcrypt.compare(candiatePassword, this.password)
+UserSchema.methods.ComparePassword = async function (candiadtePassword) {
+    return bcrypt.compare(candidatePassword, this.password)
 }
 
 
 //ELO calculation
-UserSchema.methods.updareElo = function (opponentElo , won) {
+UserSchema.methods.updateElo = function (opponentElo , won) {
     const k = 32
     const expected = 1/ (1 + Math.pow(10, (opponentElo - this.eloRating)/400))
     const score = won ? 1 : 0
@@ -103,10 +103,16 @@ UserSchema.methods.updareElo = function (opponentElo , won) {
 //virtual for win rate
 UserSchema.virtual('winRate').get(function () {
     if(this.battlesPlayed == 0) return 0
-    return Math.round((this.wins/this.battlesPlayed) *100)
+    return Number(((wins / battlesPlayed) * 100).toFixed(2))
 }) 
 
 
 UserSchema.set('toJSON', {virtuals: true})
+
+
+UserSchema.index({ eloRating: -1 })
+UserSchema.index({ isOnline: 1 })
+UserSchema.index({ lastSeen: -1 })
+
 
 export default mongoose.model('User', UserSchema)
