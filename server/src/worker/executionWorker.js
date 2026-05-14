@@ -470,7 +470,7 @@ async function startWorker() {
   const publisher = createClient({
     url:
       process.env.REDIS_URL ||
-      'redis://redis:6379',
+      'redis://localhost:6379',
   });
 
   await publisher.connect();
@@ -515,7 +515,7 @@ async function startWorker() {
       connection: {
         host:
           process.env.REDIS_HOST ||
-          'redis',
+          'localhost',
 
         port:
           parseInt(
