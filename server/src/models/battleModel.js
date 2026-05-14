@@ -117,7 +117,7 @@ const BattleSchema = new mongoose.Schema({
     submissions: [SubmissionSchema],
     chatMessages: [chatMessageSchema],
     isPrivate: {
-        type: Booleaan,
+        type: Boolean,
         default: false
     },
     maxPlayers: {
