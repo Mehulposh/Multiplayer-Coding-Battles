@@ -1,6 +1,9 @@
-import { FiLogIn } from 'react-icons/fi';
 
-export default function SubmitButton({ isLoading }) {
+export default function SubmitButton({ 
+  isLoading,
+  icon: Icon,
+  text,
+ }) {
   return (
     <button
       type="submit"
@@ -11,8 +14,8 @@ export default function SubmitButton({ isLoading }) {
         <div className="w-5 h-5 border-2 border-battle-bg/30 border-t-battle-bg rounded-full animate-spin" />
       ) : (
         <>
-          <FiLogIn className="w-5 h-5" />
-          Sign In
+          <Icon className='w-5 h-5'/>
+          {text}
         </>
       )}
     </button>
