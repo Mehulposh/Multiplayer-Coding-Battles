@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiMail, FiLock } from 'react-icons/fi';
+import { FiMail, FiLock , FiLogIn} from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 import useAuthStore from '../../zustandStore/authStore.js';
@@ -50,7 +50,11 @@ export default function LoginForm() {
           icon={FiLock}
         />
 
-        <SubmitButton isLoading={isLoading} />
+        <SubmitButton
+            isLoading={isLoading}
+            icon={FiLogIn}
+            text="Sign In"
+        />
       </form>
 
       <p className="text-center text-battle-muted text-sm mt-6">
