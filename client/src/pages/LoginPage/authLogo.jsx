@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FiZap } from 'react-icons/fi';
 
-export default function AuthLogo() {
+export default function AuthLogo({ title, subtitle }) {
   return (
     <div className="text-center mb-8">
       <Link to="/" className="inline-flex items-center gap-2 mb-6">
@@ -13,11 +13,11 @@ export default function AuthLogo() {
       </Link>
 
       <h1 className="font-display font-black text-3xl text-white">
-        Welcome back
+       {title}
       </h1>
 
       <p className="text-battle-muted mt-2">
-        Sign in to continue your conquest
+       {subtitle}
       </p>
     </div>
   );
