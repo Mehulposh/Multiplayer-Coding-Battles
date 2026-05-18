@@ -1,7 +1,7 @@
 import { getRankLabel } from './dashboardUtils.js';
 
 export default function DashboardHeader({ user }) {
-  const rank = getRankLabel(user?.eloRating || 1000);
+  const rank = getRankLabel(user?.eloRating || 0);
 
   return (
     <div className="flex items-start justify-between">
