@@ -1,4 +1,4 @@
-import Logo from './Logo.js';
+import Logo from './Logo.jsx';
 import NavLinks from './navLinks.jsx';
 import UserMenu from './userMenu.jsx';
 
