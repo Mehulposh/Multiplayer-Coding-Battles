@@ -28,7 +28,7 @@ export default function IdleState({
         Your ELO:
         <span className="text-battle-accent font-mono font-bold">
           {' '}
-          {user?.eloRating || 1000}
+          {user?.eloRating || 0}
         </span>
       </p>
     </div>
