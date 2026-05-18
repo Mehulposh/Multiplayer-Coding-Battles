@@ -1,9 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
+import mongoose from 'mongoose';
 import Battle from '../models/battleModel.js';
 import Problem from '../models/problemModel.js';
 import User from '../models/userModel.js';
 import { addToExecutionQueue } from '../queue/executionQueue.js';
 import logger from '../utils/logger.js';
+
+function buildBattleQuery(id) {
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    return { $or: [{ _id: id }, { roomId: id }] };
+  }
+  return { roomId: id };
+}
 
 const createBattle = async (req, res) => {
   try {
@@ -42,7 +50,7 @@ const createBattle = async (req, res) => {
 
 const getBattle = async (req, res) => {
   try {
-    const battle = await Battle.findById(req.params.id)
+    const battle = await Battle.findOne(buildBattleQuery(req.params.id))
       .populate('players.user', 'username eloRating avatar')
       .populate('problem')
       .populate('winner', 'username');
@@ -60,7 +68,7 @@ const getBattle = async (req, res) => {
 
 const joinBattle = async (req, res) => {
   try {
-    const battle = await Battle.findById(req.params.id).populate('problem');
+    const battle = await Battle.findOne(buildBattleQuery(req.params.id)).populate('problem');
 
     if (!battle) {
       return res.status(404).json({ message: 'Battle not found' });
