@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     },
     eloRating: {
         type: Number,
-        default: 1000,
+        default: 0,
         min: 0,
     },
     battlesPlayed: {
