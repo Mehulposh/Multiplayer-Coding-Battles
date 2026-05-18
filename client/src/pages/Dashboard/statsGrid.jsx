@@ -11,7 +11,7 @@ export default function StatsGrid({ user }) {
   const stats = [
     {
       label: 'ELO Rating',
-      value: user?.eloRating || 1000,
+      value: user?.eloRating || 0,
       icon: FiTrendingUp,
       color: 'text-battle-accent',
       bg: 'bg-battle-accent/10',
