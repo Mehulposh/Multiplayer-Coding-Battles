@@ -76,9 +76,7 @@ export default function ProblemCard({
                 {problem.title}
               </h2>
 
-              <p className="text-battle-muted text-sm mt-2 line-clamp-2">
-                {problem.description}
-              </p>
+              
             </div>
 
             {/* TAGS */}
