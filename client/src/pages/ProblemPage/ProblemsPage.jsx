@@ -14,29 +14,21 @@ import LoadingProblems from './LoadingProblems.jsx';
 import EmptyProblems from './EmptyProblems.jsx';
 
 export default function ProblemsPage() {
-  const [problems, setProblems] =
-    useState([]);
+  const [problems, setProblems] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] =
-    useState('');
+  const [search, setSearch] = useState('');
 
-  const [selectedDiff, setSelectedDiff] =
-    useState('all');
+  const [selectedDiff, setSelectedDiff] =  useState('all');
 
-  const [selectedTag, setSelectedTag] =
-    useState('');
+  const [selectedTag, setSelectedTag] = useState('');
 
-  const [page, setPage] =
-    useState(1);
+  const [page, setPage] = useState(1);
 
-  const [totalPages, setTotalPages] =
-    useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const [total, setTotal] =
-    useState(0);
+  const [total, setTotal] = useState(0);
 
   const LIMIT = 10;
 
@@ -73,6 +65,8 @@ export default function ProblemsPage() {
               `/problems?${params}`
             );
 
+          console.log('problems data', data);
+          
           setProblems(
             data.problems || []
           );
