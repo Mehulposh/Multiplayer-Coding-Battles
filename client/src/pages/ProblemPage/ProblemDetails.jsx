@@ -1,10 +1,12 @@
-import ExampleBlock from './ExampleBlock';
-import ConstraintsList from './ConstraintsList';
-import LanguagesList from './LanguagesList';
+import ExampleBlock from './ExampleBlock.jsx';
+import ConstraintsList from './ConstraintsList.jsx';
+import LanguagesList from './LanguagesList.jsx';
 
 export default function ProblemDetails({
   problem,
 }) {
+  console.log('problem',problem);
+  
   return (
     <div className="mt-5 space-y-6 border-t border-battle-border pt-5">
       {/* DESCRIPTION */}
