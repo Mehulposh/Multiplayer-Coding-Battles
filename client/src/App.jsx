@@ -12,8 +12,8 @@ import RegisterPage from './pages/RegisterPage/regsiterPage.jsx';
 import DashboardPage from './pages/Dashboard/dashboardPage.jsx';
 import BattleRoomPage from './pages/BattleRoomPage/battleRoomPage.jsx';
 import LeaderboardPage from './pages/LeaderBoard/LeaderboardPage.jsx';
-// import ProfilePage from './pages/profile/';
-// import ProblemsPage from './pages/ProblemsPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
+import ProblemsPage from './pages/ProblemPage/ProblemsPage.jsx';
 // import AdminProblemsPage from './pages/admin/AdminProblemsPage';
 
 function ProtectedRoute({ children }) {
@@ -54,9 +54,9 @@ export default function App() {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="battle/:roomId" element={<BattleRoomPage />} />
           <Route path="leaderboard" element={<LeaderboardPage />} />
-          {/* <Route path="profile/:username" element={<ProfilePage />} />
+          <Route path="profile/:username" element={<ProfilePage />} />
           <Route path="problems" element={<ProblemsPage />} />
-          <Route path="admin/problems" element={<AdminProblemsPage />} /> */}
+          {/* <Route path="admin/problems" element={<AdminProblemsPage />} /> */}
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
