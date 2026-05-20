@@ -55,7 +55,7 @@ export default function ProblemCard({
         onClick={() =>
           setExpanded(!expanded)
         }
-        className="w-full px-6 py-5 text-left hover:bg-white/[0.02] transition-colors"
+        className="w-full px-6 py-5 text-left hover:bg-white/2 transition-colors"
       >
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-3 flex-1">
