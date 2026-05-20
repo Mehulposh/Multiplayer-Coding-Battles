@@ -118,6 +118,8 @@ export default function DashboardPage() {
       />
 
       <RecentBattles
+        title="Recent Battles"
+        emptyMessage="No battles yet. Start your first match!"
         battles={recentBattles}
         loading={loadingBattles}
         user={user}
