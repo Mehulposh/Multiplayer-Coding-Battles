@@ -115,7 +115,7 @@ const getProblems = async (req, res) => {
 
     const [problems, total] = await Promise.all([
       Problem.find(filter)
-        .select('title difficulty tags timeLimitMs memoryLimitMb')
+        .select('title description difficulty tags timeLimitMs memoryLimitMb')
         .skip(skip)
         .limit(parseInt(limit))
         .sort({ difficulty: 1, title: 1 }),
