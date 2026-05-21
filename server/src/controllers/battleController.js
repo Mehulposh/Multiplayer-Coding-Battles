@@ -50,19 +50,54 @@ const createBattle = async (req, res) => {
 
 const getBattle = async (req, res) => {
   try {
-    const battle = await Battle.findOne(buildBattleQuery(req.params.id))
-      .populate('players.user', 'username eloRating avatar')
-      .populate('problem')
-      .populate('winner', 'username');
+    console.log('STEP 1');
+
+    let battle = await Battle.findOne(
+      buildBattleQuery(req.params.id)
+    );
+
+    console.log('STEP 2');
+
+    battle = await battle.populate(
+      'players.user',
+      'username eloRating avatar'
+    );
+
+    console.log('STEP 3');
+
+    battle = await battle.populate(
+      'problem'
+    );
+
+    console.log('STEP 4');
+
+    battle = await battle.populate(
+      'winner',
+      'username'
+    );
+
+    console.log('STEP 5');
 
     if (!battle) {
-      return res.status(404).json({ message: 'Battle not found' });
+      return res.status(404).json({
+        message:
+          'Battle not found',
+      });
     }
 
     res.json({ battle });
   } catch (err) {
-    logger.error('Get battle error:', err);
-    res.status(500).json({ message: 'Failed to fetch battle' });
+    console.error(err);
+
+    logger.error(
+      'Get battle error:',
+      err
+    );
+
+    res.status(500).json({
+      message:
+        'Failed to fetch battle',
+    });
   }
 };
 
