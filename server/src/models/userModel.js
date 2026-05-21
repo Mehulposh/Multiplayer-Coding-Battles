@@ -102,9 +102,16 @@ UserSchema.methods.updateElo = function (opponentElo , won) {
 
 //virtual for win rate
 UserSchema.virtual('winRate').get(function () {
-    if(this.battlesPlayed == 0) return 0
-    return Number(((wins / battlesPlayed) * 100).toFixed(2))
-}) 
+  if (!this.battlesPlayed) {
+    return 0;
+  }
+
+  return Math.round(
+    (this.wins /
+      this.battlesPlayed) *
+      100
+  );
+});
 
 
 UserSchema.set('toJSON', {virtuals: true})
