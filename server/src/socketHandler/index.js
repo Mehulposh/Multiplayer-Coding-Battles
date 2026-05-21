@@ -5,7 +5,9 @@ import battleSocketHandlers from './battleSocket.js';
 import matchmakingSocketHandlers from './matchmakingSocket.js';
 import chatSocketHandlers from './chatSocket.js';
 
-function registerSocketHandlers(io) {
+
+ function registerSocketHandlers(io) {
+  
   // Auth middleware for sockets
   io.use(async (socket, next) => {
     const token = socket.handshake.auth?.token;
