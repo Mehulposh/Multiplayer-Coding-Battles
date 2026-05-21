@@ -106,7 +106,7 @@ export default function BattleRoomPage() {
       battle.reset();
       editor.reset();
     };
-  }, [roomId,  battle, editor, navigate]);
+  }, [roomId,  navigate]);
 
   /*
     -----------------------------------------
