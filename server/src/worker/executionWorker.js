@@ -14,9 +14,7 @@ import User from '../models/userModel.js';
 import logger from '../utils/logger.js';
 
 dotenv.config()
-const docker = new Docker({
-  socketPath: '/var/run/docker.sock',
-});
+const docker = new Docker();
 
 // ===============================
 // Language Configurations
@@ -548,8 +546,10 @@ async function startWorker() {
 // ===============================
 
 startWorker().catch((err) => {
+  console.error(err);
+
   logger.error(
-    'Worker startup failed',
+    'Worker startup failed:',
     err
   );
 
