@@ -19,6 +19,7 @@ import profileRoutes from './routes/profileRoutes.js';
 
 // Socket handlers
 import registerSocketHandlers from './socketHandler/index.js';
+import { initSubmissionSubscriber} from './socketHandler/submissionSubscriber.js'
 
 dotenv.config()
 const app = express();
@@ -72,7 +73,7 @@ app.use((err, _req, res, _next) => {
 });
 
 // Socket handlers
-registerSocketHandlers(io);
+ registerSocketHandlers(io);
 
 // Start server
 const PORT = process.env.PORT || 5000;
@@ -80,7 +81,7 @@ const PORT = process.env.PORT || 5000;
 async function startServer() {
   await connectDB();
   await connectRedis();
-  
+  await initSubmissionSubscriber(io);
   server.listen(PORT, () => {
     logger.info(`🚀 Server running on port ${PORT}`);
     logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
