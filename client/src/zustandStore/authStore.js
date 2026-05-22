@@ -50,14 +50,19 @@ const useAuthStore = create(
 
       fetchMe: async () => {
         const token = localStorage.getItem('token');
-        if (!token) return;
+        if (!token) {
+          set({
+            authLoading: false
+          })
+          return 
+        };
         try {
           const { data } = await api.get('/auth/me');
-          set({ user: data.user, token, isAuthenticated: true });
+          set({ user: data.user, token, isAuthenticated: true , authLoading: false});
           initSocket(token);
         } catch {
           localStorage.removeItem('token');
-          set({ user: null, token: null, isAuthenticated: false });
+          set({ user: null, token: null, isAuthenticated: false , authLoading: false});
         }
       },
 
