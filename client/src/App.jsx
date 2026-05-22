@@ -14,7 +14,7 @@ import BattleRoomPage from './pages/BattleRoomPage/battleRoomPage.jsx';
 import LeaderboardPage from './pages/LeaderBoard/LeaderboardPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import ProblemsPage from './pages/ProblemPage/ProblemsPage.jsx';
-// import AdminProblemsPage from './pages/admin/AdminProblemsPage';
+import AdminProblemsPage from './pages/AdminProblemPage/AdminProblemsPage.jsx';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, token } = useAuthStore();
@@ -56,7 +56,7 @@ export default function App() {
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="profile/:username" element={<ProfilePage />} />
           <Route path="problems" element={<ProblemsPage />} />
-          {/* <Route path="admin/problems" element={<AdminProblemsPage />} /> */}
+          <Route path="admin/problems" element={<AdminProblemsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
