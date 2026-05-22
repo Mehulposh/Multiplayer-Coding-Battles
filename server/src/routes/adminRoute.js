@@ -19,4 +19,4 @@ router.patch('/users/:id/role',      toggleUserRole); // PATCH /api/admin/users/
 router.delete('/users/:id',          deleteUser);     // DELETE /api/admin/users/:id
 router.get('/battles',               getBattles);     // GET   /api/admin/battles
 
-module.exports = router;
+export default router;
