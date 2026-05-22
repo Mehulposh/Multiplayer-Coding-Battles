@@ -35,6 +35,6 @@ export const adminLinks = [
   {
     to: '/admin/problems',
     icon: FiCode,
-    label: 'Problems',
+    label: 'New Problems',
   },
 ];
