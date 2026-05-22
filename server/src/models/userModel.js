@@ -55,6 +55,11 @@ const UserSchema = new mongoose.Schema({
             ref: 'User'
         }
     ],
+    role: {
+        type: String,
+        enum: ['user','admin'],
+        default: 'user'
+    },
     isOnline: {
         type: Boolean,
         default: false,
