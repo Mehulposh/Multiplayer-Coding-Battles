@@ -28,15 +28,19 @@ const LANGUAGE_CONFIG = {
     command: (filename) => ['node', filename],
 
     wrapCode: (code, input) => `
-const lines = ${JSON.stringify(input)}
-  .split('\\n');
+    const input = ${input}; 
+    ${code}
+    const cloned = JSON.parse(
+      JSON.stringify(input)
+    );
 
-let lineIndex = 0;
+    const result = reverseString(cloned);
 
-const readline = () => lines[lineIndex++] || '';
-
-${code}
-`,
+    console.log(JSON.stringify(
+      result ?? cloned
+    )
+  );
+  `,
   },
 
   python: {
