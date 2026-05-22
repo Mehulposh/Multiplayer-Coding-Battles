@@ -6,6 +6,8 @@ export default function UserMenu() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
 
+  const isAdmin = user?.role === 'admin';
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -13,21 +15,30 @@ export default function UserMenu() {
 
   if (!user) return null;
 
-  return (
+   return (
     <div className="flex items-center gap-3">
       <div className="text-right hidden sm:block">
-        <div className="text-sm font-semibold text-white font-display">
-          {user.username}
+        <div className="flex items-center gap-1.5 justify-end">
+          <div className="text-sm font-semibold text-white font-display">
+            {user.username}
+          </div>
+
+          {isAdmin && (
+            <span className="text-xs px-1.5 py-0.5 rounded bg-purple-400/20 text-purple-400 font-bold">
+              Admin
+            </span>
+          )}
         </div>
 
         <div className="text-xs text-battle-accent font-mono">
-          {user.eloRating} ELO
+          {user.eloRating}{' '}
+          ELO
         </div>
       </div>
 
       <Link
         to={`/profile/${user.username}`}
-        className="w-9 h-9 rounded-full bg-gradient-to-br from-battle-accent/30 to-battle-accent2/30 flex items-center justify-center border border-battle-border hover:border-battle-accent transition-colors"
+        className="w-9 h-9 rounded-full bg-linear-to-br from-battle-accent/30 to-battle-accent2/30 flex items-center justify-center border border-battle-border hover:border-battle-accent transition-colors"
       >
         {user.avatar ? (
           <img
@@ -41,9 +52,10 @@ export default function UserMenu() {
       </Link>
 
       <button
-        onClick={handleLogout}
+        onClick={
+          handleLogout
+        }
         className="p-2 rounded-lg text-battle-muted hover:text-battle-danger hover:bg-battle-danger/10 transition-all"
-        title="Logout"
       >
         <FiLogOut className="w-4 h-4" />
       </button>
