@@ -608,7 +608,7 @@ export default function BattleRoomPage() {
       />
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-[340px] shrink-0 border-r border-battle-border bg-battle-surface overflow-y-auto">
+        <div className="w-85 shrink-0 border-r border-battle-border bg-battle-surface overflow-y-auto">
           <ProblemPanel
             problem={battle.problem}
           />
