@@ -16,6 +16,7 @@ import battleRoutes from './routes/battleRoutes.js';
 import problemRoutes from './routes/problemRoutes.js';
 import leaderboardRoutes from './routes/leaderBoardRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
+import adminRoutes from './routes/adminRoute.js'
 
 // Socket handlers
 import registerSocketHandlers from './socketHandler/index.js';
@@ -56,6 +57,7 @@ app.use('/api/battle', battleRoutes);
 app.use('/api/problems', problemRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/admin', adminRoutes);  
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date() }));
