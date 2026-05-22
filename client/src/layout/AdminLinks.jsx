@@ -25,7 +25,7 @@ export default function AdminLinks() {
             <Link
               key={to}
               to={to}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-lg font-medium transition-all duration-200 ${
                 location.pathname ===
                 to
                   ? 'bg-purple-400/10 text-purple-400'
