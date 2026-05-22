@@ -15,7 +15,7 @@ const getProfile = async (req, res) => {
       'players.user': user._id,
       status: 'finished',
     })
-      .populate('players.user', 'username eloRating')
+      .populate('players.user', 'username eloRating role')
       .populate('problem', 'title difficulty')
       .populate('winner', 'username')
       .sort({ createdAt: -1 })
@@ -28,6 +28,7 @@ const getProfile = async (req, res) => {
       user: {
         id: user._id,
         username: user.username,
+        role: user.role,
         eloRating: user.eloRating,
         wins: user.wins,
         losses: user.losses,
