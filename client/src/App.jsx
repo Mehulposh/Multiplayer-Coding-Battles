@@ -15,29 +15,89 @@ import LeaderboardPage from './pages/LeaderBoard/LeaderboardPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import ProblemsPage from './pages/ProblemPage/ProblemsPage.jsx';
 import AdminProblemsPage from './pages/AdminProblemPage/AdminProblemsPage.jsx';
+import AdminDashboardPage from './pages/AdminDashboardPage/AdminDashboardPage.jsx';
 
 function ProtectedRoute({ children }) {
-  const { isAuthenticated, token } = useAuthStore();
+  const { isAuthenticated, token , authLoading } = useAuthStore();
+
+  if(authLoading) return null
+
   if (!token && !isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
   return children;
 }
 
-function PublicRoute({ children }) {
-  const { isAuthenticated } = useAuthStore();
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+function AdminRoute({ children }) {
+  const {
+    isAuthenticated,
+    token,
+    user,
+    authLoading
+  } = useAuthStore();
+
+  if(authLoading)return null
+  if (!token && !isAuthenticated) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
   }
+
+  if (user?.role !== 'admin') {
+    return (
+      <Navigate
+        to="/dashboard"
+        replace
+      />
+    );
+  }
+
+  return children;
+}
+
+function PublicRoute({ children }) {
+  const {
+    isAuthenticated,
+    user,
+    authLoading
+  } = useAuthStore();
+
+  if(authLoading) return null
+  if (isAuthenticated) {
+    if (user?.role === 'admin') {
+      return (
+        <Navigate
+          to="/admin"
+          replace
+        />
+      );
+    }
+
+    return (
+      <Navigate
+        to="/dashboard"
+        replace
+      />
+    );
+  }
+
   return children;
 }
 
 export default function App() {
-  const { fetchMe, token } = useAuthStore();
-
+  const { fetchMe, token ,user} = useAuthStore();
+  console.log('user',user);
+  
   useEffect(() => {
     if (token) {
       fetchMe();
+    }else{
+      useAuthStore.setState({
+        authLoading: false
+      })
     }
   }, [fetchMe,token]);
 
@@ -56,8 +116,22 @@ export default function App() {
           <Route path="leaderboard" element={<LeaderboardPage />} />
           <Route path="profile/:username" element={<ProfilePage />} />
           <Route path="problems" element={<ProblemsPage />} />
-          <Route path="admin/problems" element={<AdminProblemsPage />} />
-        </Route>
+          <Route 
+            path="admin"
+            element={
+              <AdminRoute>
+                <AdminDashboardPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="admin/problems"
+            element={
+              <AdminRoute>
+                <AdminProblemsPage />
+              </AdminRoute>
+            }
+          />        </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
