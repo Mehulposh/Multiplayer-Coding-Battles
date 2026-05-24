@@ -23,7 +23,7 @@ function ProtectedRoute({ children }) {
   if(authLoading) return null
 
   if (!token && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
   return children;
 }
