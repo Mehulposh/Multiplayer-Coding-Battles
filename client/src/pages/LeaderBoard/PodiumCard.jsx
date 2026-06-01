@@ -37,7 +37,7 @@ export default function PodiumCard({
         y: 0,
       }}
       transition={{ delay }}
-      className={`rounded-3xl border flex flex-col items-center justify-between p-6 ${heights[place]} ${style.bg}`}
+      className={`rounded-3xl border flex mb-4 items-center justify-between p-6 ${heights[place]} ${style.bg}`}
     >
       {/* TOP */}
       <div className="text-center">
