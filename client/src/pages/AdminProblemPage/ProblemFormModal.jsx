@@ -262,7 +262,7 @@ export default function ProblemFormModal({
           opacity: 0,
           scale: 0.96,
         }}
-        className="w-full max-w-6xl max-h-[95vh] overflow-hidden bg-battle-card border border-battle-border rounded-2xl flex flex-col"
+        className="w-full max-w-6xl h-[95vh] overflow-hidden bg-battle-card border border-battle-border rounded-2xl flex flex-col"
       >
         {/* HEADER */}
 
@@ -314,7 +314,7 @@ export default function ProblemFormModal({
           onSubmit={
             handleSubmit
           }
-          className="flex-1 overflow-y-auto p-5"
+          className="flex-1 overflow-y-auto min-h-0 p-5"
         >
           {tab === 'basic' && (
             <BasicTab
