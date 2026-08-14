@@ -23,7 +23,8 @@ export default function StarterCodeTab({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 ">
+    
       {LANGUAGES.map(
         (lang) => (
           <div
