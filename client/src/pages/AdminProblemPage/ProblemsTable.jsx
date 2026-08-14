@@ -17,6 +17,8 @@ export default function ProblemsTable({
   onDelete,
   fetchProblems,
 }) {
+  console.log('filtered problems', filtered);
+  
   const SortIcon = ({
     field,
   }) => {
