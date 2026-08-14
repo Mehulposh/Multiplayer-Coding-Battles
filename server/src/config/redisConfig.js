@@ -4,15 +4,24 @@ import logger from '../utils/logger.js';
 let redisClient;
 
 async function connectRedis() {
-  redisClient = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
-    maxRetriesPerRequest: 3,
-    lazyConnect: true,
+  redisClient = new Redis(
+    process.env.REDIS_URL || 'redis://localhost:6379',
+    {
+      maxRetriesPerRequest: 3,
+      lazyConnect: true,
+    }
+  );
+
+  redisClient.on('connect', () => {
+    logger.info('✅ Redis connected');
   });
 
-  redisClient.on('connect', () => logger.info('✅ Redis connected'));
-  redisClient.on('error', (err) => logger.error('Redis error:', err));
+  redisClient.on('error', (err) => {
+    logger.error('Redis error:', err);
+  });
 
-  await redisClient.connect().catch(() => {}); // ioredis auto-connects
+  await redisClient.connect();
+
   return redisClient;
 }
 
