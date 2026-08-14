@@ -127,4 +127,4 @@ UserSchema.index({ isOnline: 1 })
 UserSchema.index({ lastSeen: -1 })
 
 
-export default mongoose.model('User', UserSchema)
+export default mongoose.model('BattleUser', UserSchema)
