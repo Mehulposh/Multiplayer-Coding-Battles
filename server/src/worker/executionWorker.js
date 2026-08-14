@@ -7,6 +7,7 @@ import os from 'os';
 import { Worker } from 'bullmq';
 import Docker from 'dockerode';
 import { createClient } from 'redis';
+import IORedis from 'ioredis';
 
 import connectDB from '../config/dbConfig.js';
 import Battle from '../models/battleModel.js';
@@ -15,6 +16,15 @@ import logger from '../utils/logger.js';
 
 dotenv.config()
 const docker = new Docker();
+
+
+const bullConnection = new IORedis(
+  process.env.REDIS_URL || 'redis://localhost:6379',
+  {
+    maxRetriesPerRequest: null,
+  }
+);
+
 
 // ===============================
 // Language Configurations
@@ -481,13 +491,10 @@ async function startWorker() {
     'code-execution',
 
     async (job) => {
-      logger.info(
-        `Processing job ${job.id}`
-      );
+      logger.info(`Processing job ${job.id}`);
 
       try {
-        const result =
-          await processSubmission(job.data);
+        const result = await processSubmission(job.data);
 
         if (result) {
           await publisher.publish(
@@ -496,34 +503,18 @@ async function startWorker() {
           );
         }
 
-        logger.info(
-          `Job ${job.id} completed`
-        );
+        logger.info(`Job ${job.id} completed`);
 
         return result;
       } catch (err) {
-        logger.error(
-          `Job ${job.id} failed`,
-          err
-        );
-
+        logger.error(`Job ${job.id} failed`, err);
         throw err;
       }
     },
 
     {
       concurrency: 5,
-
-      connection: {
-        host:
-          process.env.REDIS_HOST ||
-          'localhost',
-
-        port:
-          parseInt(
-            process.env.REDIS_PORT
-          ) || 6379,
-      },
+      connection: bullConnection,
     }
   );
 
